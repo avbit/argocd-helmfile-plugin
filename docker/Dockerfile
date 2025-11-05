@@ -33,7 +33,7 @@ RUN groupadd -g $ARGOCD_USER_ID argocd && \
 # Supported Kubernetes Versions 1.33.x - 1.30.x (https://helm.sh/docs/topics/version_skew/)
 ARG HELM3_VERSION="v3.18.6"
 # https://github.com/helmfile/helmfile/releases
-ARG HELMFILE_VERSION="1.1.5"
+ARG HELMFILE_VERSION="1.1.9"
 
 # https://github.com/getsops/sops/releases
 ARG SOPS_VERSION="v3.10.2"
