@@ -1,7 +1,8 @@
 # argocd-helmfile-plugin
+[![CI](https://github.com/avbit/argocd-helmfile-plugin/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/avbit/argocd-helmfile-plugin/actions/workflows/ci.yml)
+![GitHub release](https://img.shields.io/github/v/release/avbit/argocd-helmfile-plugin)
+![Image](https://img.shields.io/docker/pulls/avbit/argocd-helmfile-plugin.svg)
 
-![Image](https://img.shields.io/docker/pulls/code-tool/argocd-helmfile-plugin.svg)
-![Image](https://img.shields.io/github/actions/workflow/status/code-tool/argocd-helmfile-plugin/ci.yml?branch=main&style=flat-square)
 
 # Intro
 
