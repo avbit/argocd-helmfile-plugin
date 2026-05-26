@@ -1,7 +1,7 @@
 # argocd-helmfile-plugin
 
-![Image](https://img.shields.io/docker/pulls/avbit/argocd-helmfile-plugin.svg)
-![Image](https://img.shields.io/github/actions/workflow/status/avbit/argocd-helmfile-plugin/ci.yml?branch=master&style=flat-square)
+![Image](https://img.shields.io/docker/pulls/code-tool/argocd-helmfile-plugin.svg)
+![Image](https://img.shields.io/github/actions/workflow/status/code-tool/argocd-helmfile-plugin/ci.yml?branch=main&style=flat-square)
 
 # Intro
 
@@ -119,80 +119,3 @@ variables declared in the application spec.
 
 - https://argoproj.github.io/argo-cd/user-guide/config-management-plugins/#environment
 - https://argoproj.github.io/argo-cd/user-guide/build-environment/
-
-## Helm Plugins
-
-To use the various helm plugins the recommended approach is the install the
-plugins using the/an `initContainers` (explicitly set the `HELM_DATA_HOME` env
-var during the `helm plugin add` command) and simply set the `HELM_DATA_HOME`
-environment variable in your application spec (or globally in the pod). This
-prevents the plugin(s) from being downloaded over and over each run.
-
-```yaml
-# repo server deployment
-  volumes:
-  ...
-  - name: helm-data-home
-    emptyDir: {}
-
-# repo-server container
-  volumeMounts:
-  ...
-  - mountPath: /home/argocd/.local/share/helm
-    name: helm-data-home
-
-# init container
-  volumeMounts:
-  ...
-  - mountPath: /helm/data
-    name: helm-data-home
-
-    [[ ! -d "${HELM_DATA_HOME}/plugins/helm-secrets" ]] && /custom-tools/helm-v3 plugin install https://github.com/jkroepke/helm-secrets --version ${HELM_SECRETS_VERSION}
-    chown -R 999:999 "${HELM_DATA_HOME}"
-
-# lastly, in your app definition
-...
-plugin:
-  env:
-  - name: HELM_DATA_HOME
-    value: /home/argocd/.local/share/helm
-```
-
-If the above is not possible/desired, the recommended approach would be to use
-`HELMFILE_INIT_SCRIPT_FILE` to execute an arbitrary script during the `init`
-phase. Within the script it's desireable to run `helm plugin list` and only
-install the plugin only if it's not already installed.
-
-## Custom Init
-
-You can use the `HELMFILE_INIT_SCRIPT_FILE` feature to do any kind of _init_
-logic required including installing helm plugins, downloading external files,
-etc. The value can be a relative or absolute path and the file itself can be
-injected using an `initContainers` or stored in the application git repository.
-
-## Development
-```declarative
-# Create fork.
-# Add the original repository as a new remote called "upstream" (only once, if not done before)
-git remote add upstream https://github.com/code-tool/argocd-helmfile-plugin.git
-
-# List all remotes to verify that "upstream" exists
-git remote -v
-
-# 1. Fetch the latest changes from the original repository
-git fetch upstream
-
-# 2. Switch to your main branch (your fork’s main branch, usually `master` or `main`)
-git checkout main
-
-# 3. Merge the latest changes from the original repository into your `main`
-git merge upstream/main
-
-# 4. Push the updated `main` branch to your fork on GitHub
-git push origin main
-
-# 5. Create a new feature branch from the updated `main` for your next changes
-git checkout -b new-feature-branch
-
-# (Now you can edit files, commit changes, and push this branch, then open a new pull request)
-```

@@ -30,10 +30,10 @@ RUN groupadd -g $ARGOCD_USER_ID argocd && \
 
 # Binary versions
 # https://github.com/helm/helm/releases
-# Supported Kubernetes Versions 1.32.x - 1.29.x (https://helm.sh/docs/topics/version_skew/)
-ARG HELM3_VERSION="v3.17.4"
+# Supported Kubernetes Versions 1.33.x - 1.30.x (https://helm.sh/docs/topics/version_skew/)
+ARG HELM3_VERSION="v3.19.4"
 # https://github.com/helmfile/helmfile/releases
-ARG HELMFILE_VERSION="1.1.5"
+ARG HELMFILE_VERSION="1.1.9"
 
 # https://github.com/getsops/sops/releases
 ARG SOPS_VERSION="v3.10.2"
@@ -47,11 +47,11 @@ ARG YQ_VERSION="v4.47.1"
 
 # https://github.com/kubernetes/kubectl/tags
 # Compatible with Kubernetes versions ±1 from its version.
-ARG KUBECTL_VERSION="v1.32.8"
+ARG KUBECTL_VERSION="v1.33.4"
 # https://github.com/kubernetes-sigs/krew/releases/
 ARG KREW_VERSION="v0.4.5"
 # https://github.com/bitnami-labs/sealed-secrets/releases
-ARG KUBESEAL_VERSION="0.30.0"
+ARG KUBESEAL_VERSION="0.31.0"
 
 
 RUN \
@@ -88,11 +88,11 @@ ENV PATH="${KREW_ROOT}/bin:$PATH"
 
 # plugin versions
 # https://github.com/databus23/helm-diff/releases
-ARG HELM_DIFF_VERSION="3.12.5"
+ARG HELM_DIFF_VERSION="3.13.1"
 # https://github.com/aslafy-z/helm-git/releases
 ARG HELM_GIT_VERSION="1.4.0"
 # https://github.com/jkroepke/helm-secrets/releases
-ARG HELM_SECRETS_VERSION="4.6.5"
+ARG HELM_SECRETS_VERSION="4.6.9"
 
 RUN \
   helm plugin install https://github.com/databus23/helm-diff   --version ${HELM_DIFF_VERSION} && \
